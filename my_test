@@ -1,0 +1,47 @@
+#!/usr/bin/python3
+
+from pygame.locals import *
+import pygame, os, sys
+ 
+class game(pygame.sprite.Sprite):
+    """Class <game>"""
+    def __init__(self, width = 1920, height = 1080):
+        pygame.sprite.Sprite.__init__(self)
+        pygame.init()
+ 
+        #tools
+        self.width = width
+        self.height = height
+ 
+        #Screen + title
+        self.screen = pygame.display.set_mode((self.width, self.height))
+        pygame.display.set_caption("MY OSU")
+ 
+        self.logo = pygame.image.load("logo.png")
+        self.menu1 = pygame.image.load("menu1.png")
+        self.groupe = pygame.sprite.Group(self.logo, self.menu1)
+ 
+    def mainloop(self):
+        """Mainloop game"""
+        continuer = True
+        while continuer:      
+            for event in pygame.event.get():  
+                if event.type == pygame.QUIT:
+                    continuer = False
+                    pygame.quit()
+                    sys.exit()    
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        run = False
+                        pygame.quit()
+                        sys.exit()        
+                 
+            #blit + flip
+            self.groupe.draw(self.screen)
+            pygame.display.flip()
+
+if __name__ == "__main__":
+    play = game()
+    play.mainloop()
+             
+ 
