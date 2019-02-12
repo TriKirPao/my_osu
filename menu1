@@ -1,0 +1,76 @@
+#!/usr/bin/python3
+
+from pygame.locals import *
+import pygame, os, sys, math
+ 
+class game(pygame.sprite.Sprite):
+    """Class <game>"""
+    def __init__(self, width = 1920, height = 1080):
+        pygame.sprite.Sprite.__init__(self)
+        pygame.init()
+ 
+        #tools
+        self.width = width
+        self.height = height
+ 
+        #Screen + title
+        self.screen = pygame.display.set_mode((self.width, self.height))
+        pygame.display.set_caption("MY OSU")
+ 
+        self.bgrnd = pygame.image.load("pic/bonus.jpg")
+        self.logo = pygame.image.load("logo.png")
+        self.menu1 = pygame.image.load("menu1.png")
+
+        self.Mx = pygame.mouse.get_pos()[0]
+        self.My = pygame.mouse.get_pos()[1]
+        self.Mr = 1
+        self.Ox = 960
+        self.Oy = 540
+        self.Or = 280
+
+
+ 
+    def home(self):
+        """Home"""
+        run = True
+        while run:      
+            for event in pygame.event.get():  
+                if event.type == pygame.QUIT:
+                    run = False
+                    pygame.quit()
+                    sys.exit()    
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        run = False
+                        pygame.quit()
+                        sys.exit()        
+                 
+            #blit + flip
+            self.screen.blit(self.bgrnd, (0, 0))
+            self.screen.blit(self.logo, (152, 400))
+            pygame.display.flip()
+        
+    def menu(self):
+        """Menu one"""
+        run = True
+        while run:
+            for event in pygame.event.get():
+            self.screen.blit
+        pygame.display.flip()
+
+    def condition(self):
+        bol = 0
+        for event in pygame.event.get():
+            if math.pow((self.Mx - self.Ox), 2) + math.pow((self.My - self.Oy), 2) <= math.pow((self.Mr + self.Or), 2) and event.type == pygame.MOUSEBUTTONDOWN:
+                bol = 1
+        return (bol)
+
+    # def send(self)
+
+if __name__ == "__main__":
+    play = game()
+    play.home()
+    if play.condition == 1
+        play.menu()
+    # if (pygame.mouse.get_pos()[0] >= x and pygame.mouse.get_pos()[0] <= xmax) and (pygame.mouse.get_pos()[1] >= y and pygame.mouse.get_pos()[0] <= ymax)
+ 
