@@ -8,69 +8,104 @@ class game(pygame.sprite.Sprite):
     def __init__(self, width = 1920, height = 1080):
         pygame.sprite.Sprite.__init__(self)
         pygame.init()
+        self.BLUE =      (  0,   0, 255)
  
-        #tools
         self.width = width
         self.height = height
  
-        #Screen + title
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("MY OSU")
  
-        self.bgrnd = pygame.image.load("pic/bonus.jpg")
+        self.bgrnd = pygame.image.load("pic/4.jpg")
+        self.bgrnd2 = pygame.image.load("pic/5.jpg")
         self.logo = pygame.image.load("logo.png")
-        self.menu1 = pygame.image.load("menu1.png")
+        self.rect_play = pygame.image.load("pic/playbut.png")
+        self.rect_edit = pygame.image.load("pic/editbut.png")
+        self.rect_exit = pygame.image.load("pic/exitbut.png")
+
+        pygame.display.set_icon(self.logo)
 
         self.Mx = pygame.mouse.get_pos()[0]
         self.My = pygame.mouse.get_pos()[1]
         self.Mr = 1
         self.Ox = 960
         self.Oy = 540
-        self.Or = 280
+        self.Or = 250
 
+        self.pos = pygame.mouse.get_pos()
 
- 
-    def home(self):
-        """Home"""
-        run = True
-        while run:      
-            for event in pygame.event.get():  
-                if event.type == pygame.QUIT:
-                    run = False
-                    pygame.quit()
-                    sys.exit()    
-                elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        run = False
-                        pygame.quit()
-                        sys.exit()        
-                 
-            #blit + flip
-            self.screen.blit(self.bgrnd, (0, 0))
-            self.screen.blit(self.logo, (152, 400))
-            pygame.display.flip()
-        
-    def menu(self):
-        """Menu one"""
-        run = True
-        while run:
-            for event in pygame.event.get():
-            self.screen.blit
+    def update(self):
+        self.Mx = pygame.mouse.get_pos()[0]
+        self.My = pygame.mouse.get_pos()[1]
+        self.pos = pygame.mouse.get_pos()
+
+    def blit_home(self):
+        self.screen.blit(self.bgrnd, (0, 0))
+        self.screen.blit(self.logo, (710, 300))
+
+        pygame.draw.circle(self.screen, self.BLUE, self.pos, 2)
+        # pygame.draw.circle(self.screen, self.BLUE, (800, 540), 250)
         pygame.display.flip()
 
-    def condition(self):
-        bol = 0
-        for event in pygame.event.get():
-            if math.pow((self.Mx - self.Ox), 2) + math.pow((self.My - self.Oy), 2) <= math.pow((self.Mr + self.Or), 2) and event.type == pygame.MOUSEBUTTONDOWN:
-                bol = 1
-        return (bol)
+    def blit_menu(self): 
+        self.screen.blit(self.bgrnd2, (0, 0))
+        self.screen.blit(self.rect_play, (900, 350))
+        self.screen.blit(self.rect_edit, (970, 500))
+        self.screen.blit(self.rect_exit, (900, 650))
+        self.screen.blit(self.logo, (550, 300))
 
-    # def send(self)
+        pygame.draw.circle(self.screen, self.BLUE, self.pos, 2)
+        # pygame.draw.rect(self.screen, self.BLUE, (940, 350, 510, 120))
+        # pygame.draw.rect(self.screen, self.BLUE, (1010, 500, 460, 120))
+        # pygame.draw.rect(self.screen, self.BLUE, (940, 650, 510, 120))
+
+        pygame.display.flip()
+        
+    def condition(self):
+        print("before")
+        if math.pow((self.Mx - self.Ox), 2) + math.pow((self.My - self.Oy), 2) <= math.pow((self.Mr + self.Or), 2):
+            print("in")
+            return 1
+        print("after")
+        return 0
+    
+    def event(self):      
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                return 1
+
+    def choice(self):
+        if (self.Mx >= 940 and self.Mx <= 940 + 510) and (self.My >= 350 and self.My <= 350 + 120):
+            print("play mode")
+        elif (self.Mx >= 1010 and self.Mx <= 1010 + 460) and (self.My >= 500 and self.My <= 500 + 120):
+            print("-- edit mode")
+        elif (self.Mx >= 940 and self.Mx <= 940 + 510) and (self.My >= 650 and self.My <= 650 + 120):
+            print("exit")
+            return 2
+
+
+    #  def send(self):
 
 if __name__ == "__main__":
     play = game()
-    play.home()
-    if play.condition == 1
-        play.menu()
-    # if (pygame.mouse.get_pos()[0] >= x and pygame.mouse.get_pos()[0] <= xmax) and (pygame.mouse.get_pos()[1] >= y and pygame.mouse.get_pos()[0] <= ymax)
- 
+    bol = 0
+    while 1:
+        play.event()
+        play.update()
+        if bol == 0:
+            play.blit_home()
+            if play.event() == 1 and play.condition() == 1: 
+                print("menu")
+                bol = 1
+        if bol == 1:
+            play.blit_menu()
+            if play.event() == 1:
+                if play.choice() == 2:
+                    pygame.quit()
+                    sys.exit()
