@@ -112,3 +112,4 @@ if __name__ == "__main__":
                 if play.choice() == 1:
                     second_screen(play)
                     bol = 0
+                    play.bgrnd = pygame.image.load(random.choice(play.back_list))

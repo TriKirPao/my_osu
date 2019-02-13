@@ -4,6 +4,7 @@ import pygame
 import os
 import glob
 from song_menu import *
+from game import *
 
 pygame.init()
 blue = [0, 60, 155]
@@ -44,12 +45,12 @@ for i in range(0, 8):
 
 def text_creation(music):
     arial_font = pygame.font.SysFont('police/police.ttf', 60, True)
-    color = (255, 255, 255, 128)
+    color = (0, 0, 0, 128)
     music_name = arial_font.render(music, True, color)
     return (music_name)
 
 music = []
-for root, dirs, files in os.walk("back", topdown=False):
+for root, dirs, files in os.walk("song", topdown=False):
     for name in dirs:
         music.append(name)
 
@@ -88,21 +89,15 @@ def choice_map():
         i += 1
 
 def blit_map(idx, music_list, screen):
-    path = "back/" + music_list[idx]
-    print(path)
-    for root, dirs, files in os.walk(path, topdown=False):
-        print("in?")
-        for name in files:
-            print("and now?")
-            path_png = path + "/" + name
-            print(path_png)
-            bgn = pygame.image.load(path_png)
-            return bgn
+    path = "song/" + music_list[idx]
+    for filename in glob.glob(os.path.join(path, '*.jpg')):
+        path_png = filename
+        bgn = pygame.image.load(path_png)
+        return bgn
 
 def second_screen(play):
     launched = True
     start = 0
-    event = 0
     screen = play.screen
     while launched:
         event = check_event(start)
@@ -120,17 +115,15 @@ def second_screen(play):
         j = 0
         for rec in my_rec:
             screen.blit(my_rec[j].rect_creation(), [my_rec[j].x, my_rec[j].y])
-            pygame.draw.rect(screen, blue, (my_rec[j].x, my_rec[j].y, 100, 50))
             if i < len(music_list):
                 screen.blit(text_creation(music_list[i]), [rec.x + 85, rec.y + rec.height / 2 - 15])
                 i += 1
             j += 1
         if event == 4:
             idx = choice_map()
-            print(idx)
-            print(music_list[idx])
-            play.bgrnd = blit_map(idx, music_list, screen)
-            pygame.mixer.music.stop()
-            selec_music(music_list[idx])
+            if idx != None and idx < len(music_list):
+                play.bgrnd = blit_map(idx, music_list, screen)
+                pygame.mixer.music.stop()
+                selec_music(music_list[idx])
         pygame.display.flip()
     return
