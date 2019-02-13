@@ -6,6 +6,7 @@ class Circle:
         self._radius = radius
         self._time = time
         self._number = number
+        self._bool = 2
 
     def _gettime():
         return self._time
@@ -33,8 +34,14 @@ class Circle:
 
     def _getnumber(self):
         return self._number
+
+    def _getbool(self):
+        return self._getbool
+    def _setbool(self, value):
+        self._bool = value
     time = property(_gettime)
     number = property(_getnumber)
     x = property(_getx, _setx)
     y = property(_gety, _sety)
     radius = property(_getradius)
+    bool = property(_getbool, _setbool)

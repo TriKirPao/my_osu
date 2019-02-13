@@ -123,7 +123,6 @@ def second_screen(play):
             idx = choice_map()
             if idx != None and idx < len(music_list):
                 play.bgrnd = blit_map(idx, music_list, screen)
-                pygame.mixer.music.stop()
                 selec_music(music_list[idx])
         pygame.display.flip()
     return
