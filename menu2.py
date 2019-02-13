@@ -2,6 +2,7 @@
 
 import pygame
 import os
+import glob
 
 pygame.init()
 blue = [0, 60, 155]
@@ -46,7 +47,10 @@ def text_creation(music):
     music_name = arial_font.render(music, True, color)
     return (music_name)
 
-music = ["Yes", "No", "Yah", "Hey"]
+music = []
+for root, dirs, files in os.walk("back", topdown=False):
+    for name in dirs:
+        music.append(name)
 
 def list_creation(music, start):
     m_list = []
@@ -79,15 +83,16 @@ def second_screen(play):
                     launched = False
         music_list = list_creation(music, start)
         i = 0
+        j = 0
         for rec in my_rec:
-            screen.blit(my_rec[i].rect_creation(), [my_rec[i].x, my_rec[i].y])
-            screen.blit(text_creation(music_list[i]), [rec.x + 85, rec.y + rec.height / 2 - 15])
-            i += 1
+            screen.blit(my_rec[j].rect_creation(), [my_rec[j].x, my_rec[j].y])
+            if i < len(music_list):
+                screen.blit(text_creation(music_list[i]), [rec.x + 85, rec.y + rec.height / 2 - 15])
+                i += 1
+            j += 1
         pygame.display.flip()
 
-
-""" 
-import os
+""" import os
 import glob
 import pygame
 pygame.init()

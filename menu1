@@ -19,10 +19,11 @@ class game(pygame.sprite.Sprite):
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
         pygame.display.set_caption("MY OSU")
  
-        self.path = "back/"
-        self.list = []
-        for filename in glob.glob(os.path.join(self.path, '*.jpg')):
-            self.list.append(filename)
+        self.list= []
+        for root, dirs, files in os.walk("back", topdown=False):
+            for name in dirs:
+                for filename in glob.glob(os.path.join(os.path.join(root, name), '*.jpg')):
+                    self.list.append(filename)
 
         self.bgrnd = pygame.image.load(random.choice(self.list))
         self.logo = pygame.image.load("pic/logo.png")
