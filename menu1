@@ -2,18 +2,20 @@
 
 from pygame.locals import *
 import pygame, os, glob, sys, random, math
+from song_menu import *
+from menu2 import *
  
 class game(pygame.sprite.Sprite):
     """Class <game>"""
     def __init__(self, width = 1920, height = 1080):
         pygame.sprite.Sprite.__init__(self)
         pygame.init()
-        
-        self.BLUE =      (  0,   0, 255)
- 
+
+        self.BLUE = (0, 0, 255)
+
         self.width = width
         self.height = height
- 
+
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
         pygame.display.set_caption("MY OSU")
  
@@ -44,6 +46,9 @@ class game(pygame.sprite.Sprite):
         self.Mx = pygame.mouse.get_pos()[0]
         self.My = pygame.mouse.get_pos()[1]
         self.pos = pygame.mouse.get_pos()
+    
+    def blit_back(self):
+        self.screen.blit(self.bgrnd, (0, 0))
 
     def blit_home(self):
         self.screen.blit(self.bgrnd, (0, 0))
@@ -51,7 +56,7 @@ class game(pygame.sprite.Sprite):
         pygame.draw.circle(self.screen, self.BLUE, self.pos, 2)
         pygame.display.flip()
 
-    def blit_menu(self): 
+    def blit_menu(self):
         self.screen.blit(self.bgrnd, (0, 0))
         self.screen.blit(self.rect_play, (900, 350))
         self.screen.blit(self.rect_edit, (970, 500))
@@ -59,13 +64,13 @@ class game(pygame.sprite.Sprite):
         self.screen.blit(self.logo, (550, 300))
         pygame.draw.circle(self.screen, self.BLUE, self.pos, 2)
         pygame.display.flip()
-        
+
     def condition(self):
         if math.pow((self.Mx - self.Ox), 2) + math.pow((self.My - self.Oy), 2) <= math.pow((self.Mr + self.Or), 2):
             return 1
         return 0
-    
-    def event(self):      
+
+    def event(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -84,7 +89,7 @@ class game(pygame.sprite.Sprite):
         elif (self.Mx >= 940 and self.Mx <= 940 + 510) and (self.My >= 650 and self.My <= 650 + 120):
             pygame.quit()
             sys.exit()
-    
+
     def clear(self):
         pygame.display.update()
     
@@ -94,18 +99,19 @@ class game(pygame.sprite.Sprite):
 if __name__ == "__main__":
     play = game()
     bol = 0
+    list = create_list()
     while 1:
+        launch_music(list)
         play.clear()
         play.event()
         play.update()
         if bol == 0:
             play.blit_home()
-            if play.event() == 1 and play.condition() == 1: 
-                print("menu")
+            if play.event() == 1 and play.condition() == 1:
                 bol = 1
         if bol == 1:
             # pygame.display.clear()
             play.blit_menu()
             if play.event() == 1:
                 if play.choice() == 1:
-                    #link
+                    second_screen(play)

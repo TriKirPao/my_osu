@@ -3,13 +3,9 @@
 import pygame
 
 pygame.init()
-window_resolution = (1920, 1080)
 blue = [0, 60, 155]
 black = [0, 0, 0]
 white = [255, 255, 255]
-
-pygame.display.set_caption("Rectangle test")
-window_surface = pygame.display.set_mode(window_resolution, pygame.FULLSCREEN)
 
 ##arial_font = pygame.font.SysFont("arial", 20, True)
 ##hello_text = arial_font.render("Bonjour", False, blue)
@@ -56,25 +52,57 @@ def list_creation(music, start):
         m_list.append(music[i])
     return (m_list)
 
-def second_screen():
+def second_screen(play):
     launched = True
     start = 0
     while launched:
+        play.blit_back()
         for event in pygame.event.get():
-            window_surface.fill((black))
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 4 and start > 0:
                     start -= 1
                 elif event.button == 5 and start < len(music) - 8:
                     start += 1
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                launched = False
             music_list = list_creation(music, start)
             if event.type == pygame.QUIT:
                 launched = False
             i = 0
             for rec in my_rec:
-                pygame.draw.rect(window_surface, blue, rec.rect_creation(), 2)
-                window_surface.blit(text_creation(music_list[i]), [rec.x + 40, rec.y + rec.height / 2 - 30])
+                pygame.draw.rect(play.screen, blue, rec.rect_creation(), 2)
+                play.screen.blit(text_creation(music_list[i]), [rec.x + 40, rec.y + rec.height / 2 - 30])
                 i += 1
             pygame.display.flip()
+    return
+            
+""" 
+------------------------------------------
 
-second_screen()
+
+import os
+import glob
+import pygame
+pygame.init()
+ecran = pygame.display.set_mode((0, 0), pygame.RESIZABLE)
+list = []
+for root, dirs, files in os.walk("song", topdown=False):
+    for name in dirs:
+        for filename in glob.glob(os.path.join(os.path.join(root, name), '*.mp3')):
+            list.append(filename)
+print("c'est la liste : {}".format(list))
+
+pygame.mixer.music.load("/home/jonathan/Bureau/musiquegroove/pokemon/pokemon-b2w2-remix-champion-iris-battle-music-mashup-hq.mp3")
+pygame.mixer.music.set_volume(0.25)
+pygame.mixer.music.play()
+while 1:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            exit()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_f:
+            pygame.mixer.music.rewind()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
+            pygame.mixer.music.pause()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_z:
+            pygame.mixer.music.unpause()
+ """
