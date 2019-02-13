@@ -107,5 +107,5 @@ if __name__ == "__main__":
             # pygame.display.clear()
             play.blit_menu()
             if play.event() == 1:
-                if play.choice() == 2:
-                    play.edit_error()
+                if play.choice() == 1:
+                    #link
