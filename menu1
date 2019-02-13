@@ -24,6 +24,7 @@ class game(pygame.sprite.Sprite):
 
         self.bgrnd = pygame.image.load(random.choice(self.list))
         self.logo = pygame.image.load("pic/logo.png")
+        self.notyet = pygame.image.load("pic/notyet.png")
         self.rect_play = pygame.image.load("pic/playbut.png")
         self.rect_edit = pygame.image.load("pic/editbut.png")
         self.rect_exit = pygame.image.load("pic/exitbut.png")
@@ -77,15 +78,18 @@ class game(pygame.sprite.Sprite):
 
     def choice(self):
         if (self.Mx >= 940 and self.Mx <= 940 + 510) and (self.My >= 350 and self.My <= 350 + 120):
-            print("play mode")
+            return 1
         elif (self.Mx >= 1010 and self.Mx <= 1010 + 460) and (self.My >= 500 and self.My <= 500 + 120):
-            print("-- edit mode")
+            return 2
         elif (self.Mx >= 940 and self.Mx <= 940 + 510) and (self.My >= 650 and self.My <= 650 + 120):
             pygame.quit()
             sys.exit()
     
     def clear(self):
         pygame.display.update()
+    
+    def edit_error(self):
+        self.screen.blit(self.notyet, (550, 350))
 
 if __name__ == "__main__":
     play = game()
@@ -103,4 +107,5 @@ if __name__ == "__main__":
             # pygame.display.clear()
             play.blit_menu()
             if play.event() == 1:
-                play.choice()
+                if play.choice() == 2:
+                    play.edit_error()
