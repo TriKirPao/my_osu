@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from pygame.locals import *
-import pygame, os, sys, math
+import pygame, os, glob, sys, random, math
  
 class game(pygame.sprite.Sprite):
     """Class <game>"""
@@ -17,7 +17,12 @@ class game(pygame.sprite.Sprite):
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
         pygame.display.set_caption("MY OSU")
  
-        self.bgrnd = pygame.image.load("back/two.jpg")
+        self.path = "back/"
+        self.list = []
+        for filename in glob.glob(os.path.join(self.path, '*.jpg')):
+            self.list.append(filename)
+
+        self.bgrnd = pygame.image.load(random.choice(self.list))
         self.logo = pygame.image.load("pic/logo.png")
         self.rect_play = pygame.image.load("pic/playbut.png")
         self.rect_edit = pygame.image.load("pic/editbut.png")
