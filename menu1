@@ -4,7 +4,7 @@ from pygame.locals import *
 import pygame, os, glob, sys, random, math
 from song_menu import *
 from menu2 import *
- 
+
 class game(pygame.sprite.Sprite):
     """Class <game>"""
     def __init__(self, width = 1920, height = 1080):
@@ -47,7 +47,7 @@ class game(pygame.sprite.Sprite):
         self.Mx = pygame.mouse.get_pos()[0]
         self.My = pygame.mouse.get_pos()[1]
         self.pos = pygame.mouse.get_pos()
-    
+
     def blit_back(self):
         self.screen.blit(self.bgrnd, (0, 0))
 
@@ -99,7 +99,6 @@ if __name__ == "__main__":
     bol = 0
     list = create_list()
     while 1:
-        os.system('clear')
         launch_music(list)
         play.event()
         play.update()
@@ -112,3 +111,4 @@ if __name__ == "__main__":
             if play.event() == 1:
                 if play.choice() == 1:
                     second_screen(play)
+                    bol = 0

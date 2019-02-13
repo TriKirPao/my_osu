@@ -3,6 +3,7 @@
 import pygame
 import os
 import glob
+from song_menu import *
 
 pygame.init()
 blue = [0, 60, 155]
@@ -62,32 +63,74 @@ def list_creation(music, start):
         m_list.append(music[i])
     return (m_list)
 
+def check_event(start):
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == 27:
+                return 3
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 4 and start > 0:
+                return 2
+            elif event.button == 5 and start < len(music) - 8:
+                return 1
+            elif event.button == 1:
+                return 4
+        if event.type == pygame.QUIT:
+            return 0
+
+def choice_map():
+    Mx = pygame.mouse.get_pos()[0]
+    My = pygame.mouse.get_pos()[1]
+    i = 0
+    for rect in my_rec:
+        if (Mx >= rect.x and Mx <= rect.x + rect.width) and (My >= rect.y and My <= rect.y + rect.height):
+            return i
+        i += 1
+
+def blit_map(idx, music_list, screen):
+    path = "back/" + music_list[idx]
+    print(path)
+    for root, dirs, files in os.walk(path, topdown=False):
+        print("in?")
+        for name in files:
+            print("and now?")
+            path_png = path + "/" + name
+            print(path_png)
+            bgn = pygame.image.load(path_png)
+            return bgn
+
 def second_screen(play):
     launched = True
     start = 0
+    event = 0
     screen = play.screen
     while launched:
-        os.system('clear')
+        event = check_event(start)
+        if event == 0:
+            launched = False
+        elif event == 1:
+            start += 1
+        elif event == 2:
+            start -= 1
+        elif event == 3:
+            return
         play.blit_back()
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == 27:
-                    break
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4 and start > 0:
-                    start -= 1
-                elif event.button == 5 and start < len(music) - 8:
-                    start += 1
-            if event.type == pygame.QUIT:
-                    launched = False
         music_list = list_creation(music, start)
         i = 0
         j = 0
         for rec in my_rec:
             screen.blit(my_rec[j].rect_creation(), [my_rec[j].x, my_rec[j].y])
+            pygame.draw.rect(screen, blue, (my_rec[j].x, my_rec[j].y, 100, 50))
             if i < len(music_list):
                 screen.blit(text_creation(music_list[i]), [rec.x + 85, rec.y + rec.height / 2 - 15])
                 i += 1
             j += 1
+        if event == 4:
+            idx = choice_map()
+            print(idx)
+            print(music_list[idx])
+            play.bgrnd = blit_map(idx, music_list, screen)
+            pygame.mixer.music.stop()
+            selec_music(music_list[idx])
         pygame.display.flip()
     return
