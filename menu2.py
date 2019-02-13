@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-import pygame
-import os
+import pygame, os, glob
 
 pygame.init()
 window_resolution = (1920, 1080)
@@ -9,9 +8,6 @@ black = [255, 255, 255]
 
 pygame.display.set_caption("Rectangle test")
 window_surface = pygame.display.set_mode(window_resolution, pygame.FULLSCREEN)
-
-##arial_font = pygame.font.SysFont("arial", 20, True)
-##hello_text = arial_font.render("Bonjour", False, blue)
 
 class rectangle:
 
@@ -48,7 +44,10 @@ def text_creation(music):
     music_name = arial_font.render(music, True, color)
     return (music_name)
 
-music = ["Yes", "No", "Yah", "Hey"]
+music = []
+for root, dirs, files in os.walk("Songs", topdown=False):
+    for name in dirs:
+        music.append(name)
 
 def list_creation(music, start):
     m_list = []
@@ -65,7 +64,7 @@ def second_screen():
     start = 0
     while launched:
         os.system('clear')
-        screen = pygame.image.load("pic/1.jpg")
+        screen = pygame.image.load("pic/six.jpg")
         window_surface.blit(screen, [0, 0])
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -81,10 +80,13 @@ def second_screen():
                     launched = False
         music_list = list_creation(music, start)
         i = 0
+        j = 0
         for rec in my_rec:
-            window_surface.blit(my_rec[i].rect_creation(), [my_rec[i].x, my_rec[i].y])
-            window_surface.blit(text_creation(music_list[i]), [rec.x + 85, rec.y + rec.height / 2 - 15])
-            i += 1
+            window_surface.blit(my_rec[j].rect_creation(), [my_rec[j].x, my_rec[j].y])
+            if i < len(music_list):
+                window_surface.blit(text_creation(music_list[i]), [rec.x + 85, rec.y + rec.height / 2 - 15])
+                i += 1
+            j += 1
         pygame.display.flip()
 
 second_screen()
