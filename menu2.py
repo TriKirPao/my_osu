@@ -3,6 +3,7 @@
 import pygame
 import os
 import glob
+from game import *
 
 pygame.init()
 blue = [0, 60, 155]
@@ -78,7 +79,6 @@ def check_event(start):
 def second_screen(play):
     launched = True
     start = 0
-    event = 0
     screen = play.screen
     while launched:
         event = check_event(start)

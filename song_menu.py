@@ -19,3 +19,8 @@ def launch_music(list):
         pygame.mixer.music.load(random.choice(list))
         pygame.mixer.music.play()
         pygame.mixer.music.set_volume(0.30)
+
+def select_music(name):
+    new_name = name + "/" + name + ".mp3"
+    pygame.mixer.music.load(new_name)
+    pygame.mixer.music.play()
