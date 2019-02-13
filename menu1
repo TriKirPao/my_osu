@@ -90,9 +90,6 @@ class game(pygame.sprite.Sprite):
             pygame.quit()
             sys.exit()
 
-    def clear(self):
-        pygame.display.update()
-    
     def edit_error(self):
         self.screen.blit(self.notyet, (550, 350))
 
@@ -101,8 +98,8 @@ if __name__ == "__main__":
     bol = 0
     list = create_list()
     while 1:
+        os.system('clear')
         launch_music(list)
-        play.clear()
         play.event()
         play.update()
         if bol == 0:
@@ -110,7 +107,6 @@ if __name__ == "__main__":
             if play.event() == 1 and play.condition() == 1:
                 bol = 1
         if bol == 1:
-            # pygame.display.clear()
             play.blit_menu()
             if play.event() == 1:
                 if play.choice() == 1:

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import pygame
+import os
 
 pygame.init()
 blue = [0, 60, 155]
@@ -13,11 +14,11 @@ white = [255, 255, 255]
 class rectangle:
 
     def __init__(self, y):
-        self.x = 1220
+        self.x = 1000
         self._y = y
         self.width = 700
         self.height = 135
-        self.rec = 0
+        self.img = 0
 
     def y_getage(self):
         return self._y
@@ -31,8 +32,8 @@ class rectangle:
     y = property(y_getage, y_setage)
 
     def rect_creation(self):
-        self.rec = pygame.Rect(self.x, self.y, self.width, self.height)
-        return (self.rec)
+        self.img = pygame.image.load("texture/selection.png")
+        return (self.img)
 
 
 my_rec = []
@@ -41,45 +42,51 @@ for i in range(0, 8):
 
 def text_creation(music):
     arial_font = pygame.font.SysFont('police/police.ttf', 60, True)
-    music_name = arial_font.render(music, True, white)
+    color = (255, 255, 255, 128)
+    music_name = arial_font.render(music, True, color)
     return (music_name)
 
-music = ["Yes", "No", "Yah", "Hey", "Bah", "Hello", "zfz", "fzfz", "ve", "ffzs", "fefe"]
+music = ["Yes", "No", "Yah", "Hey"]
 
 def list_creation(music, start):
     m_list = []
-    for i in range(start, start + 8):
+    if (len(music) < 8):
+        size = len(music)
+    else:
+        size = 8
+    for i in range(start, start + size):
         m_list.append(music[i])
     return (m_list)
 
 def second_screen(play):
     launched = True
     start = 0
+    screen = play.screen
     while launched:
+        os.system('clear')
         play.blit_back()
         for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == 27:
+                    pygame.quit()
+                    exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 4 and start > 0:
                     start -= 1
                 elif event.button == 5 and start < len(music) - 8:
                     start += 1
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                launched = False
-            music_list = list_creation(music, start)
             if event.type == pygame.QUIT:
-                launched = False
-            i = 0
-            for rec in my_rec:
-                pygame.draw.rect(play.screen, blue, rec.rect_creation(), 2)
-                play.screen.blit(text_creation(music_list[i]), [rec.x + 40, rec.y + rec.height / 2 - 30])
-                i += 1
-            pygame.display.flip()
-    return
-            
+                    launched = False
+        music_list = list_creation(music, start)
+        i = 0
+        for rec in my_rec:
+            screen.blit(my_rec[i].rect_creation(), [my_rec[i].x, my_rec[i].y])
+            screen.blit(text_creation(music_list[i]), [rec.x + 85, rec.y + rec.height / 2 - 15])
+            i += 1
+        pygame.display.flip()
+
+
 """ 
-------------------------------------------
-
-
 import os
 import glob
 import pygame
