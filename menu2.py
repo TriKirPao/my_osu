@@ -62,25 +62,36 @@ def list_creation(music, start):
         m_list.append(music[i])
     return (m_list)
 
+def check_event(start):
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == 27:
+                return 3
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 4 and start > 0:
+                return 2
+            elif event.button == 5 and start < len(music) - 8:
+                return 1
+        if event.type == pygame.QUIT:
+            return 0
+
 def second_screen(play):
     launched = True
     start = 0
+    event = 0
     screen = play.screen
     while launched:
+        event = check_event(start)
+        if event == 0:
+            launched = False
+        elif event == 1:
+            start += 1
+        elif event == 2:
+            start -= 1
+        elif event == 3:
+            return
         os.system('clear')
         play.blit_back()
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == 27:
-                    pygame.quit()
-                    exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 4 and start > 0:
-                    start -= 1
-                elif event.button == 5 and start < len(music) - 8:
-                    start += 1
-            if event.type == pygame.QUIT:
-                    launched = False
         music_list = list_creation(music, start)
         i = 0
         j = 0
@@ -91,30 +102,3 @@ def second_screen(play):
                 i += 1
             j += 1
         pygame.display.flip()
-
-""" import os
-import glob
-import pygame
-pygame.init()
-ecran = pygame.display.set_mode((0, 0), pygame.RESIZABLE)
-list = []
-for root, dirs, files in os.walk("song", topdown=False):
-    for name in dirs:
-        for filename in glob.glob(os.path.join(os.path.join(root, name), '*.mp3')):
-            list.append(filename)
-print("c'est la liste : {}".format(list))
-
-pygame.mixer.music.load("/home/jonathan/Bureau/musiquegroove/pokemon/pokemon-b2w2-remix-champion-iris-battle-music-mashup-hq.mp3")
-pygame.mixer.music.set_volume(0.25)
-pygame.mixer.music.play()
-while 1:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            exit()
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_f:
-            pygame.mixer.music.rewind()
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_a:
-            pygame.mixer.music.pause()
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_z:
-            pygame.mixer.music.unpause()
- """
