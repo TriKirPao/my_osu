@@ -7,7 +7,7 @@ class Circle:
         self._time = time
         self._number = number
 
-    def _gettime:
+    def _gettime():
         return self._time
 
     def _getx(self):
