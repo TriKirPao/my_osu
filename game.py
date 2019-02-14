@@ -37,6 +37,14 @@ def load_game(play, name):
     pygame.mixer.music.play()
     image = "song/" + name + "/" + name + ".jpg"
     pygame.image.load(image)
-    screen.blit(image, (0, 0))
     while launch:
+        screen.blit(image, (0, 0))
         event = load_pause_menu()
+        for circle in circle_list:
+            if circle.time * 1000 < pygame.time.get_time() < circle.time * 1000 + 2000 and circle.bool == 2:
+                circle.bool = 1
+                circle = pygame.image.load("texture/hitcircle.png")
+                screen.blit(circle, (circle.x, circle.y))
+            if circle == 1 and circle.time * 1000 + 1000 <= pygame.time.get_time():
+                circle.bool = 0
+        pygame.display.flip()

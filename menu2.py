@@ -98,6 +98,7 @@ def blit_map(idx, music_list, screen):
 def second_screen(play):
     launched = True
     start = 0
+    bol_game = 0
     screen = play.screen
     while launched:
         event = check_event(start)
@@ -122,7 +123,18 @@ def second_screen(play):
         if event == 4:
             idx = choice_map()
             if idx != None and idx < len(music_list):
+                bol_game = 1
                 play.bgrnd = blit_map(idx, music_list, screen)
                 selec_music(music_list[idx])
+            if idx == None:
+                bol_game = 0
+        if bol_game == 1:
+            if event == 4:
+                idx_nd = choice_map()
+                if idx_nd == idx:
+                    load_game(play, music_list[idx])
+                if idx_nd == None:
+                    bol_game = 0
+
         pygame.display.flip()
     return
