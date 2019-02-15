@@ -56,7 +56,6 @@ class game(pygame.sprite.Sprite):
     def blit_home(self):
         self.screen.blit(self.bgrnd, (0, 0))
         self.screen.blit(self.logo, (710, 300))
-        pygame.draw.circle(self.screen, self.BLUE, self.pos, 2)
         pygame.display.flip()
 
     def blit_menu(self):
@@ -65,7 +64,6 @@ class game(pygame.sprite.Sprite):
         self.screen.blit(self.rect_edit, (970, 500))
         self.screen.blit(self.rect_exit, (900, 650))
         self.screen.blit(self.logo, (550, 300))
-        pygame.draw.circle(self.screen, self.BLUE, self.pos, 2)
         pygame.display.flip()
 
     def condition(self):

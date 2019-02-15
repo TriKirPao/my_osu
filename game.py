@@ -15,18 +15,27 @@ def check_click(event, circle_list, play):
                 pass
 
 def load_pause_menu(play, circle_list):
+    resume = pygame.image.load("pic/continue.png")
+    retry = pygame.image.load("pic/retry.png")
+    backmenu = pygame.image.load("pic/backmenu.png")
     for mainevent in pygame.event.get():
-        if mainevent.type == pygame.KEYDOWN and mainevent.key == pygame.K_ESCAPE:
+        if (mainevent.type == pygame.KEYDOWN and mainevent.key == pygame.K_ESCAPE):
             pygame.mixer.music.pause()
+            play.screen.blit(resume, (700, 300))
+            play.screen.blit(retry, (700, 500))
+            play.screen.blit(backmenu, (700, 700))
+            pygame.display.flip()
             while 1:
+                Mx = pygame.mouse.get_pos()[0]
+                My = pygame.mouse.get_pos()[1]
                 for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_c:
+                    if event.type == pygame.MOUSEBUTTONDOWN and Mx >= 700 and Mx <= 700 + 530 and My >= 300 and My <= 300 + 124:
                         pygame.mixer.music.unpause()
                         return 0
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                    if event.type == pygame.MOUSEBUTTONDOWN and Mx >= 700 and Mx <= 700 + 530 and My >= 500 and My <= 500 + 124:
                         pygame.mixer.music.rewind()
                         return 1
-                    if event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                    if event.type == pygame.MOUSEBUTTONDOWN and Mx >= 700 and Mx <= 700 + 530 and My >= 700 and My <= 700 + 124:
                         pygame.mixer.music.stop()
                         return 2
         if mainevent.type == pygame.KEYDOWN and (mainevent.key == pygame.K_z or mainevent.key == pygame.K_e):
