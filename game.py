@@ -5,14 +5,13 @@ import math
 def check_click(event, circle_list, play):
     x,y = pygame.mouse.get_pos()
     for i in range(0, len(circle_list)):
-        print("nbr en cours : {}, number qui apparait: {}, booleen du cercle: {}, valeur de la gauche {}, valeur de la droite :{}".format(play.number, circle_list[i].number, circle_list[i].bool, math.pow((x - int(circle_list[i].x) - 40), 2) + math.pow((y - int(circle_list[i].y) - 40), 2), math.pow((1200), 2)))
-        if int(circle_list[i].bool) == 1 and math.pow((x - int(circle_list[i].x) - 40), 2) + math.pow((y - int(circle_list[i].y) - 40), 2) <= math.pow((50), 2) and play.number == int(circle_list[i].number):
-            print("salut")
+        if int(circle_list[i].bool) == 1 and math.pow((x - int(circle_list[i].x) - 40), 2) + math.pow((y - int(circle_list[i].y) - 40), 2) <= math.pow((55), 2) and int(play.number) == int(circle_list[i].number):
             circle_list[i].bool = 0
             try:
-                play.number = circle_list[i + 1].number
+                play.number = int(circle_list[i + 1].number)
             except:
                 pass
+            return
 
 def load_pause_menu(play, circle_list):
     resume = pygame.image.load("pic/continue.png")
