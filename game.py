@@ -60,9 +60,6 @@ def load_game(play, name):
     time = 0
     toblit = []
     while launch:
-<<<<<<< HEAD
-        event = check_game_event()
-=======
         clock.tick(60)
         time += clock.get_time()
         screen.blit(timage, (0, 0))
@@ -81,4 +78,3 @@ def load_game(play, name):
                 print_number(screen, circle)
         pygame.display.flip()
     play.number = 0
->>>>>>> 7eb6f124bdbca25089f92d6da523022157d5eb22
