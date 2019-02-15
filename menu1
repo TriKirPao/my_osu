@@ -16,9 +16,11 @@ class game(pygame.sprite.Sprite):
         self.width = width
         self.height = height
 
+        self.number = 0
+
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
         pygame.display.set_caption("MY OSU")
- 
+
         self.back_list= []
         for root, dirs, files in os.walk("back", topdown=False):
             for name in dirs:
