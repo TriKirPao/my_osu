@@ -120,15 +120,6 @@ def second_screen(play):
                 screen.blit(text_creation(music_list[i]), [rec.x + 85, rec.y + rec.height / 2 - 15])
                 i += 1
             j += 1
-        if event == 4:
-            idx = choice_map()
-            if idx != None and idx < len(music_list):
-                bol_game = 1
-                play.bgrnd = blit_map(idx, music_list, screen)
-                pygame.mixer.music.stop()
-                selec_music(music_list[idx])
-            if idx == None:
-                bol_game = 0
         if bol_game == 1:
             if event == 4:
                 idx_nd = choice_map()
@@ -136,6 +127,14 @@ def second_screen(play):
                     load_game(play, music_list[idx])
                 if idx_nd == None:
                     bol_game = 0
+        if event == 4:
+            idx = choice_map()
+            if idx != None and idx < len(music_list):
+                bol_game = 1
+                play.bgrnd = blit_map(idx, music_list, screen)
+                selec_music(music_list[idx])
+            if idx == None:
+                bol_game = 0
 
         pygame.display.flip()
     return

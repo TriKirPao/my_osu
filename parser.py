@@ -1,7 +1,7 @@
 from circle import *
 
 def parser(map):
-    map = map + "/" + map + ".msu"
+    map = "song/" + map + "/" + map + ".msu"
     f = open(map, "r")
     if f.mode == 'r':
         content = f.read()
@@ -15,5 +15,5 @@ def parser(map):
         start += 1
     for i in range(start, len(lines) - 1):
         line = lines[i].split('/')
-        circles.append(Circle(line[0], line[1], line[2], line[3], line[4]))
+        circles.append(Circle(line[0], line[1], line[2], line[3]))
     return (circles)

@@ -16,9 +16,11 @@ class game(pygame.sprite.Sprite):
         self.width = width
         self.height = height
 
+        self.number = 0
+
         self.screen = pygame.display.set_mode((self.width, self.height), pygame.FULLSCREEN)
         pygame.display.set_caption("MY OSU")
- 
+
         self.back_list= []
         for root, dirs, files in os.walk("back", topdown=False):
             for name in dirs:
@@ -54,7 +56,6 @@ class game(pygame.sprite.Sprite):
     def blit_home(self):
         self.screen.blit(self.bgrnd, (0, 0))
         self.screen.blit(self.logo, (710, 300))
-        pygame.draw.circle(self.screen, self.BLUE, self.pos, 2)
         pygame.display.flip()
 
     def blit_menu(self):
@@ -63,7 +64,6 @@ class game(pygame.sprite.Sprite):
         self.screen.blit(self.rect_edit, (970, 500))
         self.screen.blit(self.rect_exit, (900, 650))
         self.screen.blit(self.logo, (550, 300))
-        pygame.draw.circle(self.screen, self.BLUE, self.pos, 2)
         pygame.display.flip()
 
     def condition(self):
